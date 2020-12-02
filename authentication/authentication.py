@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 @dataclass
 class CorporatePolicy:
-    min_amount: int
-    max_amount: int
+    first_index: int
+    second_index: int
     value: str
 
     def __init__(self, input_policy_string=None):
@@ -13,9 +13,9 @@ class CorporatePolicy:
     def parse_policy(self, input_policy=None):
         if input_policy is not None:
             amounts, self.value = input_policy.split()
-            min_amount_str, max_amount_str = amounts.split('-')
-            self.min_amount = int(min_amount_str)
-            self.max_amount = int(max_amount_str)
+            first_index_str, second_index_str = amounts.split('-')
+            self.first_index = int(first_index_str) - 1
+            self.second_index = int(second_index_str) - 1
 
 
 @dataclass
@@ -24,7 +24,8 @@ class PasswordDatabase:
     password: str
 
     def check_corporate_policy(self):
-        return self.policy.min_amount <= self.password.count(self.policy.value) <= self.policy.max_amount
+        return (self.password[self.policy.first_index] == self.policy.value) ^ (self.password[
+            self.policy.second_index] == self.policy.value)
 
 
 if __name__ == '__main__':
