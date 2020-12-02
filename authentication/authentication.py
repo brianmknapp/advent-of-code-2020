@@ -32,4 +32,4 @@ if __name__ == '__main__':
         policies = [PasswordDatabase(policy=CorporatePolicy(z[0].strip()), password=z[1].strip()) for z in
                     [y.split(':') for y in [x.strip() for x in f]]]
     valid_passwords = [x for x in policies if x.check_corporate_policy()]
-    print('bagel')
+    print('Valid Passwords Count: {}'.format(len(valid_passwords)))
