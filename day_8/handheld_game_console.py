@@ -83,7 +83,6 @@ def main(file_name):
 
     print('Part 1 Outputs: Success - {} | Accumulator - {}'.format(success, part_1_output))
 
-
     for index, operation in enumerate(operations):
         loop_operations = operations.copy()
         if operation[0] == 'nop':
@@ -100,7 +99,6 @@ def main(file_name):
         if success:
             print('Part 2 Outputs: Success - {} | Accumulator - {}'.format(success, attempt_output))
             break
-
 
 
 if __name__ == '__main__':
