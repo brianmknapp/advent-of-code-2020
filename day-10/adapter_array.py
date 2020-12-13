@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from parsimonious.grammar import Grammar, NodeVisitor
 
 grammar = Grammar(r"""
@@ -58,12 +60,26 @@ def part_1(file_name):
 
 
 def part_2(file_name):
+    paths = defaultdict(int)
+    paths[0] = 1
+
     tree = grammar.parse(open(file_name).read())
 
     vv = ValueVisitor()
     values = vv.visit(tree)
 
-    return None
+    values.append(0)
+    values.append(max(values) + 3)
+
+    values.sort()
+
+    for adapter in values:
+        for diff in range(1, 4):
+            next_adapter = adapter + diff
+            if next_adapter in values:
+                paths[next_adapter] += paths[adapter]
+
+    return paths
 
 
 if __name__ == '__main__':
@@ -71,7 +87,9 @@ if __name__ == '__main__':
 
     print('{} 1-jolt differences multiplied by {} 3-jolt differences = {}'.format(part_1_result['1-jolt'],
                                                                                   part_1_result['3-jolt'], (
-                                                                                              part_1_result['1-jolt'] *
-                                                                                              part_1_result['3-jolt'])))
+                                                                                          part_1_result['1-jolt'] *
+                                                                                          part_1_result['3-jolt'])))
 
-    part_2_result = part_2('test_input_1.txt')
+    part_2_result = part_2('real_input.txt')
+
+    print('debug')
